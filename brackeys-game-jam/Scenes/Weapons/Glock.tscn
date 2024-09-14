@@ -1,0 +1,130 @@
+[gd_scene load_steps=12 format=3 uid="uid://cl4knmsr810ic"]
+
+[ext_resource type="PackedScene" path="res://Scenes/Weapons/GunBarrelExplosion.tscn" id="1_gj8oy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mgckl"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yyn57"]
+material = SubResource("StandardMaterial3D_mgckl")
+
+[sub_resource type="BoxMesh" id="BoxMesh_28ie0"]
+
+[sub_resource type="Animation" id="Animation_iaxns"]
+resource_name = "Shoot"
+length = 0.1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.01, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.05), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.01, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0), Vector3(-0.523599, 3.14159, 0), Vector3(0, 3.14159, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tqwtu"]
+_data = {
+"Shoot": SubResource("Animation_iaxns")
+}
+
+[sub_resource type="Curve" id="Curve_dexfj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.991968, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_fp80q"]
+curve = SubResource("Curve_dexfj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bqvkc"]
+particle_flag_align_y = true
+direction = Vector3(0, 0, 0)
+spread = 30.0
+initial_velocity_min = 189.42
+initial_velocity_max = 211.41
+scale_min = 0.1
+scale_max = 0.2
+scale_curve = SubResource("CurveTexture_fp80q")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1u70u"]
+albedo_color = Color(0.968627, 0.776471, 0, 1)
+emission_enabled = true
+emission = Color(0.933333, 0.247059, 0, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3o7n1"]
+material = SubResource("StandardMaterial3D_1u70u")
+top_radius = 0.1
+bottom_radius = 0.0
+height = 0.3
+
+[node name="Glock" type="Node3D"]
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0690892, -0.186736)
+target_position = Vector3(0, 0, -1)
+
+[node name="MeshContainer" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0, 0, 0)
+
+[node name="Barrel" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(0.0478281, 0, 0, 0, -3.71e-09, -0.04922, 0, 0.084875, -2.15147e-09, 0, 0.064363, 0.0843266)
+mesh = SubResource("CylinderMesh_yyn57")
+skeleton = NodePath("../..")
+
+[node name="Handle" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(0.0213074, 0, 0, 0, 0.076218, 0, 0, 0, 0.0246479, 0, 0.0289233, 0)
+mesh = SubResource("BoxMesh_28ie0")
+skeleton = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MeshContainer"]
+libraries = {
+"": SubResource("AnimationLibrary_tqwtu")
+}
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="MeshContainer"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.83622e-08, 0.0667357, 0.210039)
+visible = false
+light_color = Color(1, 1, 0, 1)
+light_energy = 0.125
+
+[node name="GunBarrelExplosion" parent="MeshContainer" instance=ExtResource("1_gj8oy")]
+
+[node name="GunShot" type="AudioStreamPlayer2D" parent="."]
+volume_db = 3.759
+pitch_scale = 1.26
+
+[node name="ExplosionParticles" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.00980652, 0, 0, 0, -0.0109127, -2.11275e-09, 0, 9.54016e-10, -0.0241671, 0, 0.0986714, -0.17756)
+emitting = false
+amount = 3
+lifetime = 0.01
+one_shot = true
+speed_scale = 21.87
+explosiveness = 1.0
+fixed_fps = 60
+visibility_aabb = AABB(-4, -4, -1.7212, 8, 8, 3.44241)
+trail_lifetime = 0.02
+process_material = SubResource("ParticleProcessMaterial_bqvkc")
+draw_pass_1 = SubResource("CylinderMesh_3o7n1")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.15
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

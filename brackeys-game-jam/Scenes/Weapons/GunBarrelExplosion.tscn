@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://4i1bw71nn555"]
+
+[ext_resource type="PackedScene" uid="uid://cumpvk40g1loc" path="res://Assets/Models/Blender Models/Effects/GunBarrelExplosion.blend" id="1_s103o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dkyu3"]
+albedo_color = Color(1, 0.658824, 0.223529, 1)
+
+[node name="GunBarrelExplosion" instance=ExtResource("1_s103o")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+
+[node name="Icosphere" parent="." index="0"]
+material_override = SubResource("StandardMaterial3D_dkyu3")
