@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cmm626fuwl7j4"]
 
-[ext_resource type="PackedScene" uid="uid://drkbyftyse3xy" path="res://Scenes/Player.tscn" id="1_epbbr"]
+[ext_resource type="PackedScene" path="res://Scenes/Player.tscn" id="1_epbbr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v25ai"]
 albedo_color = Color(0, 0.471946, 0, 1)
@@ -16,3 +16,6 @@ use_collision = true
 [node name="Player" parent="." instance=ExtResource("1_epbbr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.313839, 0.295418, 1.11209)
 collision_mask = 7
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, -1, 6, 0)
