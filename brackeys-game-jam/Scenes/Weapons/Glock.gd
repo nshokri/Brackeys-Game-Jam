@@ -15,7 +15,7 @@ extends Node3D
 @export var explosion_particle_path: NodePath
 @onready var explosion_particles: GPUParticles3D = get_node(explosion_particle_path)
 
-var bullet = load("res://Assets/Models/Weapons/Ammo/Bullet.tscn")
+var bullet = load("res://Scenes/Ammo/Bullet.tscn")
 var bullet_instance
 
 @export var raycast_path: NodePath

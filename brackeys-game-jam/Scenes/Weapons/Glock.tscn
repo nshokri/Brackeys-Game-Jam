@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://cl4knmsr810ic"]
+[gd_scene load_steps=13 format=3 uid="uid://cl4knmsr810ic"]
 
-[ext_resource type="PackedScene" path="res://Scenes/Weapons/GunBarrelExplosion.tscn" id="1_gj8oy"]
+[ext_resource type="PackedScene" uid="uid://b1tl0p14p816m" path="res://Scenes/Weapons/GunBarrelExplosion.tscn" id="1_gj8oy"]
+[ext_resource type="Script" path="res://Scenes/Weapons/Glock.gd" id="1_pbjsg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mgckl"]
 albedo_color = Color(0, 0, 0, 1)
@@ -74,6 +75,13 @@ bottom_radius = 0.0
 height = 0.3
 
 [node name="Glock" type="Node3D"]
+script = ExtResource("1_pbjsg")
+animation_path = NodePath("MeshContainer/AnimationPlayer")
+barrel_explosion_path = NodePath("MeshContainer/GunBarrelExplosion")
+barrel_light_path = NodePath("MeshContainer/DirectionalLight3D")
+gunshot_path = NodePath("GunShot")
+explosion_particle_path = NodePath("ExplosionParticles")
+raycast_path = NodePath("RayCast3D")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0690892, -0.186736)
